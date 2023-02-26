@@ -19,6 +19,7 @@ class WeightController {
   async getAll(req: Request, res: Response) {
     try {
       const weights = await WeightService.getAll()
+      console.log(111, weights)
       return res.json(weights)
     } catch (error) {
       //@ts-ignore

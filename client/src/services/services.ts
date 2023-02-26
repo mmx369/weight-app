@@ -1,61 +1,37 @@
-import axios from 'axios'
+import { json } from 'react-router-dom'
 
 type TCreateChallenge = {
   name: string
-  currentWeight: string
-  targetWeight: string
-  targetDate: string
+  weight: string
 }
 
-const baseUrl = 'http://localhost:5000/api/setchallenge'
+const baseUrl = 'http://localhost:5000/api/weight'
 
-const createChallenge = async (newObject: TCreateChallenge) => {
+const createNewEntry = async (newObject: TCreateChallenge) => {
   try {
-    return await axios.post(baseUrl, newObject)
+    return await fetch(baseUrl, {
+      method: 'POST',
+      body: JSON.stringify(newObject),
+    })
   } catch (error) {
     console.log('Error: ', error)
   }
 }
 
-const removeChallengeData = async (id: any) => {
+const getData = async () => {
   try {
-    return await axios.delete(`${baseUrl}/${id}`)
-  } catch (error) {
-    console.log('Error: ', error)
-  }
-}
-
-const getChallengeData = async () => {
-  try {
-    const resp = await axios.get(baseUrl)
-    if (!resp.data) {
-      return [
-        {
-          name: '',
-          currentWeight: '',
-          targetWeight: '',
-          targetDate: '',
-        },
-      ]
+    const response = await fetch(baseUrl)
+    if (!response.ok) {
+      return json({ message: 'Could not fetch events' }, { status: 500 })
     }
-    return resp.data
+    const responseData = await response.json()
+    return responseData
   } catch (error) {
     console.log('Error: ', error)
   }
-}
-
-const getStatistics = async () => {
-  console.log(111)
-}
-
-const getNames = async () => {
-  const resp = await axios.get(`${baseUrl}/names`)
-  return resp.data
 }
 
 export default {
-  createChallenge,
-  getChallengeData,
-  removeChallengeData,
-  getNames,
+  createNewEntry,
+  getData,
 }

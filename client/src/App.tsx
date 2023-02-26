@@ -1,33 +1,26 @@
-import { Container, Row } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
-import HomePage from './pages/HomePage/HomePage'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import ErrorPage from './pages/Error'
+import HomePage, { loader as WeightsLoader } from './pages/HomePage'
+import Layout from './pages/Layout'
+import { Settings } from './pages/Settings'
 
-const App = () => {
-  // const [ordered, setOrdered] = useState(false)
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Layout />,
+    errorElement: <ErrorPage />,
+    children: [
+      { index: true, element: <HomePage />, loader: WeightsLoader },
+      {
+        path: 'settings',
+        element: <Settings />,
+      },
+    ],
+  },
+])
 
-  // const displayConfirmation = () => {
-  //   setOrdered(true)
-
-  //   setTimeout(() => {
-  //     setOrdered(false)
-  //   }, 3000)
-  // }
-
-  console.log('counter')
-
-  return (
-    <>
-      <Container>
-        <Link to='settings'>
-          <i className='bi bi-gear'></i>
-        </Link>
-        {/* {ordered && <Confirmation setOrdered={setOrdered} />} */}
-        <Row>
-          <HomePage />
-        </Row>
-      </Container>
-    </>
-  )
+function App() {
+  return <RouterProvider router={router} />
 }
 
 export default App
