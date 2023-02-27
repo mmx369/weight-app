@@ -9,7 +9,7 @@ type TProps = {
 export default function WeightList({ weight }: TProps) {
   const convertDate = (date: string) => {
     let theDate = new Date(Date.parse(date))
-    return theDate.toLocaleString()
+    return theDate.toLocaleString().split(',')[0]
   }
 
   return (
@@ -19,9 +19,9 @@ export default function WeightList({ weight }: TProps) {
         {weight &&
           weight.map((el: Weight) => (
             <li key={el._id} className={classes.item}>
-              <div className={classes.content}>{`${el.name}, ${convertDate(
-                el.date
-              )}, ${el.weight}`}</div>
+              <div className={classes.content}>{`${convertDate(el.date)} | ${
+                el.weight
+              } kg. | ${el.change ? el.change + ' %' : ''}`}</div>
             </li>
           ))}
       </ul>

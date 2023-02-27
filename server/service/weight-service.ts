@@ -1,13 +1,22 @@
-import Weight from '../models/weight'
+import Weight, { IWeight } from '../models/weight'
+import { percentageChange } from '../utils/percentageChange'
 
 class WeightService {
-  async create(weight: number) {
-    const createdWeight = await Weight.create(weight)
+  async create(newWeight: { weight: number; name: string }) {
+    let { weight: recentWeight } = (await Weight.findOne().sort({
+      date: -1,
+    })) as IWeight
+    const newWeightObj = {
+      ...newWeight,
+      change: percentageChange(recentWeight, newWeight.weight),
+      date: new Date(),
+    }
+    const createdWeight = await Weight.create(newWeightObj)
     return createdWeight
   }
 
   async getAll() {
-    const weights = await Weight.find()
+    const weights = await Weight.find().sort({ date: -1 })
     return weights
   }
 }

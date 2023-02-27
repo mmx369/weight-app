@@ -5,10 +5,7 @@ class WeightController {
   async create(req: Request, res: Response) {
     //TODO: add validation logic
     try {
-      const weightEntry = await WeightService.create({
-        ...req.body,
-        date: new Date(),
-      })
+      const weightEntry = await WeightService.create(req.body)
       res.status(200).json(weightEntry)
     } catch (error) {
       //@ts-ignore
@@ -19,7 +16,6 @@ class WeightController {
   async getAll(req: Request, res: Response) {
     try {
       const weights = await WeightService.getAll()
-      console.log(111, weights)
       return res.json(weights)
     } catch (error) {
       //@ts-ignore

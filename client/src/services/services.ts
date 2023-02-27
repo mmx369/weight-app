@@ -9,10 +9,21 @@ const baseUrl = 'http://localhost:5000/api/weight'
 
 const createNewEntry = async (newObject: TCreateChallenge) => {
   try {
-    return await fetch(baseUrl, {
+    const response = await fetch(baseUrl, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(newObject),
     })
+
+    if (response.status === 422) {
+      return response
+    }
+
+    if (!response.ok) {
+      throw json({ message: 'Could not save event.' }, { status: 500 })
+    }
   } catch (error) {
     console.log('Error: ', error)
   }
