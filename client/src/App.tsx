@@ -1,32 +1,48 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { action as WeightAction } from './components/WeightForm'
-import ErrorPage from './pages/Error'
-import HomePage, { loader as WeightsLoader } from './pages/HomePage'
-import Layout from './pages/Layout'
-import { Settings } from './pages/Settings'
+import { observer } from 'mobx-react-lite'
+import { useContext, useEffect } from 'react'
+import { Context } from '.'
+import LoginForm from './components/LoginForm/LoginForm'
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Layout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        index: true,
-        element: <HomePage />,
-        loader: WeightsLoader,
-        action: WeightAction,
-      },
-      {
-        path: 'settings',
-        element: <Settings />,
-      },
-    ],
-  },
-])
+import { RotatingLines } from 'react-loader-spinner'
+import classes from './App.module.css'
+import HomePage from './pages/HomePage'
 
-function App() {
-  return <RouterProvider router={router} />
+const App = () => {
+  const { store } = useContext(Context)
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      store.checkAuth()
+    }
+  }, [store])
+
+  if (store.isLoading) {
+    return (
+      <RotatingLines
+        strokeColor='grey'
+        strokeWidth='5'
+        animationDuration='0.75'
+        width='96'
+        visible={true}
+      />
+    )
+  }
+
+  if (!store.isAuth) {
+    return (
+      <div className='App-header'>
+        <LoginForm />
+      </div>
+    )
+  }
+
+  return (
+    <div className={classes.app}>
+      <div>
+        <HomePage />
+      </div>
+    </div>
+  )
 }
 
-export default App
+export default observer(App)

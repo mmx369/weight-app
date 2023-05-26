@@ -1,5 +1,5 @@
 import { useLoaderData } from 'react-router-dom'
-import WeightForm from '../components/WeightForm'
+import WeightForm from '../components/WeightForm/WeightForm'
 import WeightList from '../components/WeightList'
 import services from '../services/services'
 

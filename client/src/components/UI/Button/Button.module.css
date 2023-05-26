@@ -1,0 +1,52 @@
+.Button {
+  font: inherit;
+  background-color: #240370;
+  color: white;
+  border: 1px solid #240370;
+  outline: transparent;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.Button:hover {
+  color: bisque;
+}
+
+.Button__disabled {
+  color: aliceblue;
+  background-color: azure;
+  border-color: blueviolet;
+  cursor: default;
+}
+
+.Button__disabled:hover {
+  color: aliceblue;
+  background-color: blueviolet;
+  border-color: blueviolet;
+}
+
+.Button__login {
+  font: inherit;
+  background-color: #240370;
+  color: white;
+  border: 1px solid #240370;
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 1rem;
+}
+
+.Button__login:hover,
+.Button__login:active {
+  background-color: #33059e;
+  border-color: #33059e;
+}
+
+.Button__login:disabled,
+.Button__login:disabled:hover,
+.Button__login:disabled:active {
+  background-color: #ccc;
+  color: #292929;
+  border-color: #ccc;
+  cursor: not-allowed;
+}

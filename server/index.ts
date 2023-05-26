@@ -20,7 +20,6 @@ app.use(
   })
 )
 app.use(cookieParser())
-app.use(cors())
 app.use(express.static(path.join(__dirname, '../../client/build')))
 
 app.get('/', (req: Request, res: Response) => {
