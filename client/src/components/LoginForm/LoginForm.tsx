@@ -6,11 +6,14 @@ import { useInput } from '../../hooks/use-input'
 import classes from './LoginForm.module.css'
 import { emailValidation, passwordValidation } from './validate'
 
+import { useNavigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { notify } from '../../utils/notify'
 
 const LoginForm: FC = () => {
+  const navigate = useNavigate()
+
   const {
     value: email,
     isValid: enteredEmailIsValid,
@@ -47,6 +50,7 @@ const LoginForm: FC = () => {
       .then(() => {
         resetEmailInput()
         resetPasswordInput()
+        navigate('/')
       })
       .catch((error) => notify(error, 'error'))
   }
@@ -57,6 +61,7 @@ const LoginForm: FC = () => {
       .then(() => {
         resetEmailInput()
         resetPasswordInput()
+        navigate('/')
       })
       .catch((error) => {
         notify(error, 'error')

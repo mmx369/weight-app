@@ -1,12 +1,18 @@
 import { observer } from 'mobx-react-lite'
 import { useContext } from 'react'
-import { NavLink } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Context } from '../..'
 import Button from '../UI/Button'
 import classes from './MainNavigation.module.css'
 
 function MainNavigation() {
   const { store } = useContext(Context)
+  const navigate = useNavigate()
+
+  const logoutHandler = () => {
+    store.logout()
+    navigate('/auth')
+  }
 
   return (
     <>
@@ -16,18 +22,7 @@ function MainNavigation() {
         <div className={classes.header_title}>
           {store.isAuth ? `Welcome ${store.user.email}!` : null}
         </div>
-        <NavLink
-          to='/'
-          className={({ isActive }) =>
-            isActive ? classes.active : classes.navlink
-          }
-          end
-        >
-          Home
-        </NavLink>
-        {store.isAuth && (
-          <Button onClick={() => store.logout()}>Log out</Button>
-        )}
+        {store.isAuth && <Button onClick={logoutHandler}>Log out</Button>}
       </header>
     </>
   )

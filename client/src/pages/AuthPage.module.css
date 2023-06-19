@@ -1,0 +1,8 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  max-width: 43rem;
+  max-height: calc(100vh - 56px) !important;
+  background-color: white;
+  padding: 1rem;
+}

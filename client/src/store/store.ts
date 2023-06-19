@@ -1,14 +1,16 @@
 import axios from 'axios'
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
 import { API_URL } from '../http'
 import { IUser } from '../models/IUser'
 import { AuthResponse } from '../models/response/AuthResponse'
 import AuthService from '../services/AuthService'
 
 import 'react-toastify/dist/ReactToastify.css'
+import { IWeightData } from '../models/IWeightData'
 
 export default class Store {
   user = {} as IUser
+  weightData = [] as IWeightData[]
   isAuth = false
   isLoading = false
   isRussianLng = false
@@ -24,8 +26,18 @@ export default class Store {
     this.user = user
   }
 
+  setWeightData(weightData: IWeightData[]) {
+    runInAction(() => {
+      this.weightData = [...weightData]
+    })
+  }
+
   setLoading(bool: boolean) {
     this.isLoading = bool
+  }
+
+  getWeightList() {
+    return this.weightData
   }
 
   async login(email: string, password: string) {

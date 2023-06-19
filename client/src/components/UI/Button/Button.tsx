@@ -1,4 +1,4 @@
-import classNames from 'classnames'
+import classNames from 'classnames/bind'
 import React, { DOMAttributes } from 'react'
 
 import classes from './Button.module.css'
@@ -11,7 +11,7 @@ export interface IButtonProps extends DOMAttributes<HTMLButtonElement> {
   className?: string
   isDisabled?: boolean
   typeButton?: ButtonType
-  onClick?: (e: React.MouseEvent) => void
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 export const Button: React.FC<IButtonProps> = ({

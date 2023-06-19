@@ -1,14 +1,14 @@
 import mongoose from 'mongoose'
 
 export interface IWeight {
-  name: string
+  user: string
   weight: number
   change: number
   date: Date
 }
 
 const Weight = new mongoose.Schema<IWeight>({
-  name: { type: String, required: true },
+  user: { type: String, required: true },
   weight: { type: Number, required: true },
   change: { type: Number, required: true },
   date: { type: Date, required: true },

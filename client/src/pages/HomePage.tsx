@@ -1,29 +1,15 @@
-import { useLoaderData } from 'react-router-dom'
 import WeightForm from '../components/WeightForm/WeightForm'
-import WeightList from '../components/WeightList'
-import services from '../services/services'
+import WeightList from '../components/WeightList/WeightList'
 
 import classes from './HomePage.module.css'
 
-export interface Weight {
-  _id: string
-  name: string
-  weight: number
-  change?: number
-  date: string
-}
-
-export default function HomePage() {
-  const weightList = useLoaderData() as Weight[]
+function HomePage() {
   return (
     <div className={classes.container}>
       <WeightForm />
-      <WeightList weight={weightList} />
+      <WeightList />
     </div>
   )
 }
 
-export async function loader() {
-  const response = await services.getData()
-  return response
-}
+export default HomePage

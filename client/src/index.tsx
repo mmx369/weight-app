@@ -4,10 +4,12 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import App from './App'
 
 import ErrorPage from './components/ErrorPage/Errorpage'
-import { action as WeightAction } from './components/WeightForm/WeightForm'
 import RootLayout from './pages/Root'
 import Store from './store/store'
 import './styles/index.css'
+
+import AuthPage from './pages/AuthPage'
+import { ROUTES } from './routes'
 
 interface State {
   store: Store
@@ -15,14 +17,17 @@ interface State {
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: ROUTES.HOME,
     errorElement: <ErrorPage />,
     element: <RootLayout />,
     children: [
       {
-        path: '/',
+        path: ROUTES.HOME,
         element: <App />,
-        action: WeightAction,
+      },
+      {
+        path: ROUTES.AUTH,
+        element: <AuthPage />,
       },
     ],
   },

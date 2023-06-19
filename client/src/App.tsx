@@ -1,14 +1,15 @@
 import { observer } from 'mobx-react-lite'
 import { useContext, useEffect } from 'react'
 import { Context } from '.'
-import LoginForm from './components/LoginForm/LoginForm'
 
 import { RotatingLines } from 'react-loader-spinner'
+import { useNavigate } from 'react-router-dom'
 import classes from './App.module.css'
 import HomePage from './pages/HomePage'
 
 const App = () => {
   const { store } = useContext(Context)
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -16,22 +17,22 @@ const App = () => {
     }
   }, [store])
 
+  useEffect(() => {
+    if (!store.isAuth && !store.isLoading) {
+      navigate('/auth')
+    }
+  }, [store.isAuth, store.isLoading, navigate])
+
   if (store.isLoading) {
     return (
-      <RotatingLines
-        strokeColor='grey'
-        strokeWidth='5'
-        animationDuration='0.75'
-        width='96'
-        visible={true}
-      />
-    )
-  }
-
-  if (!store.isAuth) {
-    return (
-      <div className='App-header'>
-        <LoginForm />
+      <div className={classes.spinner}>
+        <RotatingLines
+          strokeColor='grey'
+          strokeWidth='5'
+          animationDuration='0.75'
+          width='96'
+          visible={true}
+        />
       </div>
     )
   }

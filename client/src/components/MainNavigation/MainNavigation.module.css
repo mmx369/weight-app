@@ -31,19 +31,6 @@
   color: bisque;
 }
 
-.button {
-  font: inherit;
-  background-color: #240370;
-  color: white;
-  border: 1px solid #240370;
-  cursor: pointer;
-  margin-left: 1rem;
-}
-
-.button:hover {
-  color: bisque;
-}
-
 @media (max-width: 600px) {
   .header_title {
     display: none;

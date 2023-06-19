@@ -1,12 +1,9 @@
 .app {
   display: flex;
   flex-direction: column;
-  width: 90%;
   max-width: 43rem;
-  padding: 1rem;
-  border-radius: 12px;
+  max-height: calc(100vh - 56px) !important;
   background-color: white;
-  margin: 3rem auto;
 }
 
 .header {
@@ -20,14 +17,6 @@
   margin: 1rem;
 }
 
-.button {
-  font: inherit;
-  background-color: #240370;
-  color: white;
-  border: 1px solid #240370;
-  height: 3rem;
-  width: 5rem;
-  border-radius: 4px;
-  cursor: pointer;
-  margin: 0 1rem;
+.spinner {
+  text-align: center;
 }

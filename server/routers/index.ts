@@ -21,5 +21,6 @@ router.get('/refresh', userAuthController.refresh)
 
 router.get('/weight', authMiddleware, weightController.getAll)
 router.post('/weight', authMiddleware, weightController.create)
+router.delete('/weight', authMiddleware, weightController.removeLastEntry)
 
 export default router

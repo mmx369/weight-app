@@ -5,7 +5,12 @@
   border: 1px solid #240370;
   outline: transparent;
   cursor: pointer;
-  margin-left: 1rem;
+}
+
+.btn_save {
+  border-radius: 20px;
+  width: 10rem;
+  height: 2rem;
 }
 
 .Button:hover {

@@ -5,6 +5,7 @@
 html {
   margin: auto;
   height: 100%;
+  max-width: 40rem;
 }
 
 body {
