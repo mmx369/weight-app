@@ -26,7 +26,7 @@ function WeightForm() {
     await WeightService.createNewEntry(weightData)
     const res = await WeightService.getData()
     store.setWeightData(res)
-    notify('Weight added succesfully!', 'success')
+    notify('Weight added successfully!', 'success')
     setWeightInputValue('')
     setIsSubmitting(false)
   }
@@ -34,7 +34,7 @@ function WeightForm() {
   const handleDelete = async () => {
     const resp = await WeightService.removeLastEntry()
     store.setWeightData(resp)
-    notify('Deleted succesfully!', 'success')
+    notify('Deleted successfully!', 'success')
   }
 
   return (
