@@ -5,7 +5,12 @@ type TCreateChallenge = {
   weight: string
 }
 
-const baseUrl = 'http://localhost:5000/api/weight'
+const BASE_URL =
+  process.env.NODE_ENV === 'production'
+    ? process.env.REACT_APP_PROD_API_URL
+    : process.env.REACT_APP_DEV_API_URL
+
+const baseUrl = `${BASE_URL}/weight`
 
 export default class WeightService {
   static async getData() {
