@@ -3,6 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import express, { Express, Request, Response } from 'express'
 import mongoose from 'mongoose'
+import path from 'node:path'
 import errorMiddleware from './middleware/errorMiddleware'
 import apiRouter from './routers'
 
@@ -19,21 +20,17 @@ app.use(
   })
 )
 app.use(cookieParser())
-// app.use(express.static(path.join(__dirname, '../../client/build')))
-
-// app.get('/', (req: Request, res: Response) => {
-//   res.sendFile(path.join(__dirname, '../../client/index.html'))
-// })
+app.use(express.static(path.join(__dirname, '../../client/build')))
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Hello!')
+  res.sendFile(path.join(__dirname, '../../client/index.html'))
 })
 
 app.use('/api', apiRouter)
 
-// app.get('*', (req: Request, res: Response) => {
-//   res.sendFile(path.join(__dirname, '../../client/build/index.html'))
-// })
+app.get('*', (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../../client/build/index.html'))
+})
 
 app.use(errorMiddleware)
 
