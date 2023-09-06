@@ -11,6 +11,12 @@ dotenv.config()
 
 const app: Express = express()
 const PORT = process.env.PORT || 8000
+const MONGO_URI =
+  process.env.NODE_ENV === 'production'
+    ? process.env.MONGODB_URI
+    : process.env.MONGODB_URI_DEV
+
+console.log('MONGO_URI', MONGO_URI)
 
 app.use(express.json())
 app.use(
@@ -36,7 +42,7 @@ app.use(errorMiddleware)
 
 async function startApp() {
   try {
-    await mongoose.connect(process.env.MONGODB_URI as string)
+    await mongoose.connect(MONGO_URI as string)
     app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
   } catch (error) {
     console.log(error)
