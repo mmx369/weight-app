@@ -7,9 +7,7 @@
     "start": "cross-env NODE_ENV=production node dist/index.js",
     "build": "npx tsc",
     "server": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
-    "client": "npm run start --prefix client",
-    "client:build": "rm -rf build && npm run build --prefix client && mv -f client/build ./",
-    "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\""
+    "dev": "cross-env NODE_ENV=development npm run server"
   },
   "author": "",
   "license": "ISC",
