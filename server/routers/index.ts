@@ -19,6 +19,11 @@ router.post('/logout', userAuthController.logout)
 router.get('/activate/:link', userAuthController.activate)
 router.get('/refresh', userAuthController.refresh)
 
+router.get(
+  '/weight/simple-average',
+  authMiddleware,
+  weightController.getSimpleMovingAvg
+)
 router.get('/weight', authMiddleware, weightController.getAll)
 router.post('/weight', authMiddleware, weightController.create)
 router.delete('/weight', authMiddleware, weightController.removeLastEntry)

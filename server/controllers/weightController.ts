@@ -43,6 +43,20 @@ class WeightController {
     }
   }
 
+  async getSimpleMovingAvg(req: IGetUserAuthInfoRequest, res: Response) {
+    try {
+      if (!req.user.email) {
+        throw new Error('User not found!')
+      }
+      const currentUser = req.user.email
+      const weights = await WeightService.getSimpleMovingAvg(currentUser)
+      return res.json(weights)
+    } catch (error) {
+      //@ts-ignore
+      res.status(500).json(error.message)
+    }
+  }
+
   async removeLastEntry(req: IGetUserAuthInfoRequest, res: Response) {
     try {
       if (!req.user.email) {
