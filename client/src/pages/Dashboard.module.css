@@ -1,0 +1,22 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  max-width: 43rem;
+  max-height: calc(100vh - 56px) !important;
+  background-color: white;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.actions {
+  display: flex;
+  margin: 1rem;
+}
+
+.spinner {
+  text-align: center;
+}

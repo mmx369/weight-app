@@ -9,6 +9,7 @@ import Store from './store/store'
 import './styles/index.css'
 
 import AuthPage from './pages/AuthPage'
+import { Dashboard } from './pages/Dashboard'
 import { ROUTES } from './routes'
 
 interface State {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: ROUTES.HOME,
         element: <App />,
+      },
+      {
+        path: ROUTES.DASHBOARD,
+        element: <Dashboard />,
       },
       {
         path: ROUTES.AUTH,

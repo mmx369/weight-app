@@ -21,6 +21,14 @@ export default class WeightService {
     return response.data
   }
 
+  static async getSimpleMovingAvgData() {
+    const response = await $api.get(`${baseUrl}/simple-average`)
+    if (response.statusText !== 'OK') {
+      return json({ message: 'Could not fetch data' }, { status: 500 })
+    }
+    return response.data
+  }
+
   static async createNewEntry(newObject: TCreateChallenge) {
     const response = await $api.post(baseUrl, newObject)
     return response
