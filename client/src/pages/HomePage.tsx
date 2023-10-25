@@ -7,8 +7,10 @@ import classes from './HomePage.module.css'
 function HomePage() {
   return (
     <div className={classes.container}>
+      <Link to={'dashboard'} className={classes.btn}>
+        Dashboard
+      </Link>
       <WeightForm />
-      <Link to={'dashboard'}>Dashboard</Link>
       <WeightList />
     </div>
   )

@@ -1,6 +1,24 @@
 .container {
   margin: auto;
   max-width: 20rem;
+  text-align: center;
+}
+
+.btn {
+  display: inline-block;
+  background: #240370;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 20px;
+  height: 2rem;
+  width: 10rem;
+  text-align: center;
+  margin-top: 1rem;
+  padding-top: 0.3rem;
+}
+
+.btn:hover {
+  color: bisque;
 }
 
 @media (max-width: 40rem) {

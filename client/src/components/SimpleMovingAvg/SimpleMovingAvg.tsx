@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import WeightService from '../../services/WeightService'
+import { RenderLineChart } from './chart'
 
 export const SimpleMovingAvg = () => {
   const [movingAvg, setMovingAvg] = useState<number[] | undefined>()
@@ -7,20 +8,14 @@ export const SimpleMovingAvg = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = (await WeightService.getSimpleMovingAvgData()) as number[]
-      console.log(1112, data)
       setMovingAvg(data)
     }
     fetchData().catch(console.error)
   }, [])
   return (
     <div>
-      SimpleMovingAvg
-      {movingAvg &&
-        movingAvg.map((el, i) => (
-          <ul key={i + el}>
-            <li>{el}</li>
-          </ul>
-        ))}
+      <h3>Simple Moving Avarage (7 days)</h3>
+      <RenderLineChart data={movingAvg || []} />
     </div>
   )
 }

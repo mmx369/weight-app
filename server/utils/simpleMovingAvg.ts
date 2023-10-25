@@ -1,4 +1,4 @@
-export function getSimpleMovingAvg(weightData: number[], days = 3) {
+export function getSimpleMovingAvg(weightData: number[], days = 7) {
   const simpleMovingAvgArr = []
   for (let i = 0; i < weightData.length; i++) {
     if (i < days) {

@@ -9,6 +9,7 @@ import classes from './Dashboard.module.css'
 export const Dashboard = () => {
   const { store } = useContext(Context)
   const navigate = useNavigate()
+
   useEffect(() => {
     if (localStorage.getItem('token')) {
       store.checkAuth()
@@ -37,7 +38,6 @@ export const Dashboard = () => {
 
   return (
     <div className={classes.app}>
-      Dashboard
       <SimpleMovingAvg />
     </div>
   )
