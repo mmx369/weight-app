@@ -2,11 +2,11 @@ import { useContext, useEffect } from 'react'
 import { RotatingLines } from 'react-loader-spinner'
 import { useNavigate } from 'react-router-dom'
 import { Context } from '..'
-import { SimpleMovingAvg } from '../components/SimpleMovingAvg/SimpleMovingAvg'
 
+import SimpleMovingAvg from '../modules/SimpleMovingAvg'
 import classes from './Dashboard.module.css'
 
-export const Dashboard = () => {
+export const Dashboard: React.FC = () => {
   const { store } = useContext(Context)
   const navigate = useNavigate()
 

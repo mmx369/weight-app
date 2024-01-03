@@ -1,17 +1,16 @@
-import { observer } from 'mobx-react-lite'
-import { FC, useContext } from 'react'
+import { useContext } from 'react'
 import { Context } from '../..'
 
-import { useInput } from '../../hooks/use-input'
 import classes from './LoginForm.module.css'
-import { emailValidation, passwordValidation } from './validate'
+import { emailValidation, passwordValidation } from './helper/validate'
+import { useInput } from './hooks/use-input'
 
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { notify } from '../../utils/notify'
+import { notify } from '../../shared/helper/notify'
 
-const LoginForm: FC = () => {
+export const LoginForm: React.FC = () => {
   const navigate = useNavigate()
 
   const {
@@ -108,8 +107,8 @@ const LoginForm: FC = () => {
             />
             {passwordHasError && (
               <p className={classes.error_text}>
-                Password must contain at least 1 lowercase, 1 uppercase, 1
-                numeric character and min 8 symbol.
+                The password must contain at least 1 lowercase, 1 uppercase, 1
+                number and at least 8 characters.
               </p>
             )}
           </div>
@@ -136,5 +135,3 @@ const LoginForm: FC = () => {
     </>
   )
 }
-
-export default observer(LoginForm)

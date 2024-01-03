@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { AuthResponse } from '../models/response/AuthResponse'
+import { IAuthResponse } from '../shared/interfaces/IAuthResponse'
 
 export const API_URL =
   process.env.NODE_ENV === 'production'
@@ -29,7 +29,7 @@ $api.interceptors.response.use(
     ) {
       originalRequest._isRetry = true
       try {
-        const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {
+        const response = await axios.get<IAuthResponse>(`${API_URL}/refresh`, {
           withCredentials: true,
         })
         localStorage.setItem('token', response.data.accessToken)

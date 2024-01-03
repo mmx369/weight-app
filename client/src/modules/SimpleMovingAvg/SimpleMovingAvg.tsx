@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import WeightService from '../../services/WeightService'
+import classes from './SimpleMovingAvg.module.css'
 import { RenderLineChart } from './chart'
 
-export const SimpleMovingAvg = () => {
+export const SimpleMovingAvg: React.FC = () => {
   const [movingAvg, setMovingAvg] = useState<number[] | undefined>()
 
   useEffect(() => {
@@ -12,9 +13,12 @@ export const SimpleMovingAvg = () => {
     }
     fetchData().catch(console.error)
   }, [])
+
   return (
     <div>
-      <h3>Simple Moving Avarage (7 days)</h3>
+      <div className={classes.title}>
+        <h4>Simple Moving Avarage (7 days)</h4>
+      </div>
       <RenderLineChart data={movingAvg || []} />
     </div>
   )

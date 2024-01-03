@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import classes from './App.module.css'
 import HomePage from './pages/HomePage'
 
-const App = () => {
+const App: React.FC = () => {
   const { store } = useContext(Context)
   const navigate = useNavigate()
 
@@ -39,9 +39,7 @@ const App = () => {
 
   return (
     <div className={classes.app}>
-      <div>
-        <HomePage />
-      </div>
+      <HomePage />
     </div>
   )
 }

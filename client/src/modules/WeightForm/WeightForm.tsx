@@ -1,14 +1,14 @@
 import { useContext, useState } from 'react'
 import { Context } from '../..'
 import WeightService from '../../services/WeightService'
-import { Button } from '../UI/Button/Button'
+import Button from '../../shared/UI/Button'
 import classes from './WeightForm.module.css'
 
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { notify } from '../../utils/notify'
+import { notify } from '../../shared/helper/notify'
 
-function WeightForm() {
+export const WeightForm: React.FC = () => {
   const { store } = useContext(Context)
   const [weightInputValue, setWeightInputValue] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -18,7 +18,7 @@ function WeightForm() {
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     if (+weightInputValue < 1 || +weightInputValue > 200) {
-      notify('Weight must be between 1 and 160 kg.', 'error')
+      notify('Weight must be between 1 and 160', 'error')
       throw new Error('Invalid input!')
     }
     setIsSubmitting(true)
@@ -75,5 +75,3 @@ function WeightForm() {
     </>
   )
 }
-
-export default WeightForm

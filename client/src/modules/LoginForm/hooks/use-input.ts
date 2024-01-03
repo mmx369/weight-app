@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 export const useInput = (validateFn: (arg: string) => boolean) => {
   const [enteredValue, setEnteredValue] = useState('')
@@ -7,20 +7,21 @@ export const useInput = (validateFn: (arg: string) => boolean) => {
   const valueIsValid = validateFn(enteredValue)
   const hasError = !valueIsValid && isTouched
 
-  const valueChangeHandler = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setEnteredValue(e.target.value)
-  }
+  const valueChangeHandler = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setEnteredValue(e.target.value)
+    },
+    []
+  )
 
-  const inputBlurHandler = () => {
+  const inputBlurHandler = useCallback(() => {
     setIsTouched(true)
-  }
+  }, [])
 
-  const reset = () => {
+  const reset = useCallback(() => {
     setEnteredValue('')
     setIsTouched(false)
-  }
+  }, [])
 
   return {
     value: enteredValue,

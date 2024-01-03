@@ -1,7 +1,7 @@
-import LoginForm from '../components/LoginForm/LoginForm'
+import LoginForm from '../modules/LoginForm'
 import classes from './AuthPage.module.css'
 
-function AuthPage() {
+const AuthPage: React.FC = () => {
   return (
     <div className={classes.app}>
       <LoginForm />
