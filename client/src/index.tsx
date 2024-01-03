@@ -3,13 +3,14 @@ import ReactDOM from 'react-dom/client'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import App from './App'
 
-import ErrorPage from './components/ErrorPage/Errorpage'
+import ErrorPage from './pages/Errorpage'
 import RootLayout from './pages/Root'
 import Store from './store/store'
 import './styles/index.css'
 
 import AuthPage from './pages/AuthPage'
 import { Dashboard } from './pages/Dashboard'
+import { Profile } from './pages/Ptofile'
 import { ROUTES } from './routes'
 
 interface State {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: ROUTES.AUTH,
         element: <AuthPage />,
+      },
+      {
+        path: ROUTES.PROFILE,
+        element: <Profile />,
       },
     ],
   },

@@ -1,11 +1,10 @@
-import { observer } from 'mobx-react-lite'
 import { useContext, useEffect } from 'react'
 import { Context } from '../..'
-import { IWeightData } from '../../models/IWeightData'
 import WeightService from '../../services/WeightService'
+import { IWeightData } from '../../shared/interfaces/IWeightData'
 import classes from './WeightList.module.css'
 
-function WeightList() {
+export const WeightList: React.FC = () => {
   const { store } = useContext(Context)
 
   useEffect(() => {
@@ -24,12 +23,12 @@ function WeightList() {
   }
 
   if (weight.length === 0) {
-    return <h2>You have not entered your weight yet.</h2>
+    return <h2>You haven't entered your weight yet.</h2>
   }
 
   return (
     <div className={classes.container}>
-      <div className={classes.title}>Weight Statistics</div>
+      <div className={classes.title}>Weight Data</div>
       <div className={classes.list}>
         {weight &&
           weight.map((el: IWeightData) => (
@@ -45,5 +44,3 @@ function WeightList() {
     </div>
   )
 }
-
-export default observer(WeightList)

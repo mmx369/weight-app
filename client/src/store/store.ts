@@ -1,12 +1,12 @@
 import axios from 'axios'
 import { makeAutoObservable, runInAction } from 'mobx'
 import { API_URL } from '../http'
-import { IUser } from '../models/IUser'
-import { AuthResponse } from '../models/response/AuthResponse'
 import AuthService from '../services/AuthService'
+import { IAuthResponse } from '../shared/interfaces/IAuthResponse'
+import { IUser } from '../shared/interfaces/IUser'
 
 import 'react-toastify/dist/ReactToastify.css'
-import { IWeightData } from '../models/IWeightData'
+import { IWeightData } from '../shared/interfaces/IWeightData'
 
 export default class Store {
   user = {} as IUser
@@ -76,7 +76,7 @@ export default class Store {
   async checkAuth() {
     this.setLoading(true)
     try {
-      const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {
+      const response = await axios.get<IAuthResponse>(`${API_URL}/refresh`, {
         withCredentials: true,
       })
       localStorage.setItem('token', response.data.accessToken)

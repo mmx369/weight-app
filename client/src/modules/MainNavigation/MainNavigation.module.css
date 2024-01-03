@@ -17,6 +17,10 @@
   margin-left: 1rem;
 }
 
+.header_logo {
+  margin: 0 1rem;
+}
+
 .active {
   visibility: hidden;
 }
