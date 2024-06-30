@@ -1,12 +1,12 @@
-import { NextFunction, Response } from 'express'
-import profileService from '../service/profile-service'
-import { IGetUserAuthInfoRequest } from './weightController'
+import { NextFunction, Response } from 'express';
+import profileService from '../service/profile-service';
+import { IGetUserAuthInfoRequest } from './weightController';
 
 export interface IProfileData {
-  firstName?: string
-  familyName?: string
-  dateOfBirth?: Date
-  height?: number
+  firstName?: string;
+  familyName?: string;
+  dateOfBirth?: Date;
+  height?: number;
 }
 
 class UserProfileController {
@@ -17,25 +17,25 @@ class UserProfileController {
   ) {
     try {
       if (!req.user.email) {
-        throw new Error('User not found!')
+        throw new Error('User not found!');
       }
-      const currentUser = req.user.email
-      const { firstName, familyName, dateOfBirth, height } = req.body
-      console.log(888, firstName, familyName, dateOfBirth, height)
+      const currentUser = req.user.email;
+      const { firstName, familyName, dateOfBirth, height } = req.body;
+      console.log(888, firstName, familyName, dateOfBirth, height);
       const newUserData: IProfileData = {
         firstName,
         familyName,
         dateOfBirth,
         height,
-      }
+      };
       const userEditEntry = await profileService.editProfileData(
         currentUser,
         newUserData
-      )
+      );
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 }
 
-export default new UserProfileController()
+export default new UserProfileController();
