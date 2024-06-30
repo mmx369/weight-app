@@ -1,28 +1,13 @@
-import { useContext, useEffect } from 'react'
 import { RotatingLines } from 'react-loader-spinner'
-import { useNavigate } from 'react-router-dom'
-import { Context } from '..'
 
 import SimpleMovingAvg from '../modules/SimpleMovingAvg'
+import { useAuth } from '../shared/hooks/use-auth'
 import classes from './Dashboard.module.css'
 
 export const Dashboard: React.FC = () => {
-  const { store } = useContext(Context)
-  const navigate = useNavigate()
+  const { isLoading, isAuth } = useAuth()
 
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      store.checkAuth()
-    }
-  }, [store])
-
-  useEffect(() => {
-    if (!store.isAuth && !store.isLoading) {
-      navigate('/auth')
-    }
-  }, [store.isAuth, store.isLoading, navigate])
-
-  if (store.isLoading) {
+  if (isLoading) {
     return (
       <div className={classes.spinner}>
         <RotatingLines
@@ -36,9 +21,5 @@ export const Dashboard: React.FC = () => {
     )
   }
 
-  return (
-    <div className={classes.app}>
-      <SimpleMovingAvg />
-    </div>
-  )
+  return <div className={classes.app}>{isAuth && <SimpleMovingAvg />}</div>
 }

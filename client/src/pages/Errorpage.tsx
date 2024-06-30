@@ -1,7 +1,12 @@
 import { useRouteError } from 'react-router-dom'
 
+type RouteError = {
+  statusText?: string
+  message?: string
+}
+
 const ErrorPage: React.FC = () => {
-  const error = useRouteError() as any
+  const error = useRouteError() as RouteError
 
   return (
     <div id='error-page'>

@@ -34,6 +34,11 @@ export default class WeightService {
     return response
   }
 
+  static async modifyProfileData(data: any) {
+    const response = await $api.post('/edit-profile', data)
+    console.log(response)
+  }
+
   static async removeLastEntry() {
     await $api.delete(baseUrl)
     return WeightService.getData()

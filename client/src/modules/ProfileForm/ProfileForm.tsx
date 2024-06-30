@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import WeightService from '../../services/WeightService'
 import Button from '../../shared/UI/Button'
 
 interface IProfileFormProps {
@@ -32,16 +33,19 @@ export const ProfileForm: React.FC<IProfileFormProps> = ({
 
   useEffect(() => {
     setProfileData({
-      firstName: firstName || '',
+      firstName: firstName || 'Max',
       familyName: familyName || '',
       dateOfBirth: dateOfBirth || '',
       height: height || 0,
     })
   }, [firstName, familyName, dateOfBirth, height])
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>): void => {
+  const handleSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ): Promise<void> => {
     e.preventDefault()
-    console.log('Submitting....')
+    console.log('Submitting....', profileData)
+    await WeightService.modifyProfileData(profileData)
     onClose()
   }
 

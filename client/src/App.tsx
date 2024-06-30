@@ -1,29 +1,14 @@
 import { observer } from 'mobx-react-lite'
-import { useContext, useEffect } from 'react'
-import { Context } from '.'
 
 import { RotatingLines } from 'react-loader-spinner'
-import { useNavigate } from 'react-router-dom'
 import classes from './App.module.css'
 import HomePage from './pages/HomePage'
+import { useAuth } from './shared/hooks/use-auth'
 
 const App: React.FC = () => {
-  const { store } = useContext(Context)
-  const navigate = useNavigate()
+  const { isLoading, isAuth } = useAuth()
 
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      store.checkAuth()
-    }
-  }, [store])
-
-  useEffect(() => {
-    if (!store.isAuth && !store.isLoading) {
-      navigate('/auth')
-    }
-  }, [store.isAuth, store.isLoading, navigate])
-
-  if (store.isLoading) {
+  if (isLoading) {
     return (
       <div className={classes.spinner}>
         <RotatingLines
@@ -37,11 +22,7 @@ const App: React.FC = () => {
     )
   }
 
-  return (
-    <div className={classes.app}>
-      <HomePage />
-    </div>
-  )
+  return <div className={classes.app}>{isAuth && <HomePage />}</div>
 }
 
 export default observer(App)
