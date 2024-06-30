@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { body } from 'express-validator'
 import userAuthController from '../controllers/authController'
+import profileController from '../controllers/profileController'
 import weightController from '../controllers/weightController'
 import authMiddleware from '../middleware/authMiddleware'
 
@@ -27,5 +28,7 @@ router.get(
 router.get('/weight', authMiddleware, weightController.getAll)
 router.post('/weight', authMiddleware, weightController.create)
 router.delete('/weight', authMiddleware, weightController.removeLastEntry)
+
+router.post('/edit-profile', authMiddleware, profileController.editProfileData)
 
 export default router
