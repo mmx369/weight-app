@@ -160,8 +160,7 @@ export const LoginForm: React.FC = () => {
             <ReCaptcha
               siteKey={(() => {
                 const key =
-                  process.env.REACT_APP_RECAPTCHA_SITE_KEY ||
-                  '6LcV6_YrAAAAAKsu57Cy9XJPeoxoGQTnMmWhj55q';
+                  process.env.REACT_APP_RECAPTCHA_SITE_KEY || '';
                 return key;
               })()}
               action='login'

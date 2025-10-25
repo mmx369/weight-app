@@ -8,7 +8,7 @@ type TCreateChallenge = {
 const BASE_URL =
   process.env.NODE_ENV === 'production'
     ? process.env.REACT_APP_PROD_API_URL
-    : "http://localhost:5000/api";
+    : process.env.REACT_APP_DEV_API_URL;
 
 const baseUrl = `${BASE_URL}/weight`;
 

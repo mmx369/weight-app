@@ -3,6 +3,8 @@ client/node_modules
 client/build
 server/.env
 client/.env
+client/.env.development
+client/.env.production
 server/dist
 
 

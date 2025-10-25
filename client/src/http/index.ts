@@ -4,7 +4,7 @@ import { IAuthResponse } from '../shared/interfaces/IAuthResponse';
 export const API_URL =
   process.env.NODE_ENV === 'production'
     ? process.env.REACT_APP_PROD_API_URL
-    : "http://localhost:5000/api";
+    : process.env.REACT_APP_DEV_API_URL;
 
 const $api = axios.create({
   withCredentials: true,
