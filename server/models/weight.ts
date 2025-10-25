@@ -1,10 +1,10 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 export interface IWeight {
-  user: string
-  weight: number
-  change: number
-  date: Date
+  user: string;
+  weight: number;
+  change: number;
+  date: Date;
 }
 
 const Weight = new mongoose.Schema<IWeight>({
@@ -12,6 +12,9 @@ const Weight = new mongoose.Schema<IWeight>({
   weight: { type: Number, required: true },
   change: { type: Number, required: true },
   date: { type: Date, required: true },
-})
+});
 
-export default mongoose.model<IWeight>('Weight', Weight)
+Weight.index({ user: 1, date: -1 }); // Составной индекс для быстрого поиска по пользователю и дате
+Weight.index({ user: 1 }); // Индекс для поиска по пользователю
+
+export default mongoose.model<IWeight>('Weight', Weight);

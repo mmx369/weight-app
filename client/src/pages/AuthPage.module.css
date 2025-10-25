@@ -1,8 +1,14 @@
 .app {
   display: flex;
   flex-direction: column;
-  max-width: 43rem;
-  max-height: calc(100vh - 56px) !important;
-  background-color: white;
+  max-width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    var(--background-primary),
+    var(--background-secondary)
+  );
   padding: 1rem;
+  justify-content: center;
+  align-items: center;
 }

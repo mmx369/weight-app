@@ -1,9 +1,9 @@
 .app {
   display: flex;
   flex-direction: column;
-  max-width: 43rem;
-  max-height: calc(100vh - 56px) !important;
-  background-color: white;
+  max-width: 100%;
+  min-height: 100vh;
+  background: transparent;
 }
 
 .header {

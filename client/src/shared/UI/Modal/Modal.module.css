@@ -8,11 +8,32 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
+  padding: 1rem;
 }
 
 .modal {
-  background: white;
-  padding: 20px;
-  border-radius: 5px;
-  z-index: 1000;
+  background: var(--background-card);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--border-color);
+  max-width: 90vw;
+  max-height: 90vh;
+  width: 100%;
+  overflow-y: auto;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .modal_backdrop {
+    padding: 0.5rem;
+    align-items: flex-start;
+    padding-top: 2rem;
+  }
+
+  .modal {
+    max-width: 95vw;
+    max-height: 85vh;
+    margin: 0;
+  }
 }

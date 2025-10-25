@@ -1,46 +1,51 @@
-import { json } from 'react-router-dom'
-import $api from '../http'
+import { json } from 'react-router-dom';
+import $api from '../http';
 
 type TCreateChallenge = {
-  weight: string
-}
+  weight: string;
+};
 
 const BASE_URL =
   process.env.NODE_ENV === 'production'
     ? process.env.REACT_APP_PROD_API_URL
-    : process.env.REACT_APP_DEV_API_URL
+    : "http://localhost:5000/api";
 
-const baseUrl = `${BASE_URL}/weight`
+const baseUrl = `${BASE_URL}/weight`;
 
 export default class WeightService {
-  static async getData() {
-    const response = await $api.get(baseUrl)
+  static async getData(page = 1, limit = 10) {
+    const response = await $api.get(`${baseUrl}?page=${page}&limit=${limit}`);
     if (response.statusText !== 'OK') {
-      return json({ message: 'Could not fetch data' }, { status: 500 })
+      return json({ message: 'Could not fetch data' }, { status: 500 });
     }
-    return response.data
+    return response.data;
   }
 
   static async getSimpleMovingAvgData() {
-    const response = await $api.get(`${baseUrl}/simple-average`)
+    const response = await $api.get(`${baseUrl}/simple-average`);
     if (response.statusText !== 'OK') {
-      return json({ message: 'Could not fetch data' }, { status: 500 })
+      return json({ message: 'Could not fetch data' }, { status: 500 });
     }
-    return response.data
+    return response.data;
   }
 
   static async createNewEntry(newObject: TCreateChallenge) {
-    const response = await $api.post(baseUrl, newObject)
-    return response
+    const response = await $api.post(baseUrl, newObject);
+    return response;
   }
 
   static async modifyProfileData(data: any) {
-    const response = await $api.post('/edit-profile', data)
-    console.log(response)
+    const response = await $api.post('/edit-profile', data);
+    console.log(response);
   }
 
   static async removeLastEntry() {
-    await $api.delete(baseUrl)
-    return WeightService.getData()
+    await $api.delete(baseUrl);
+    return WeightService.getData();
+  }
+
+  static async deleteEntry(entryId: string) {
+    const response = await $api.delete(`${baseUrl}/${entryId}`);
+    return response;
   }
 }

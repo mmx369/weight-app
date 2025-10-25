@@ -2,20 +2,58 @@ import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import ApiError from '../exceptions/api-error';
 import userService from '../service/user-service';
+import { RecaptchaService } from '../service/recaptcha-service';
 
 class UserAuthController {
   async registration(req: Request, res: Response, next: NextFunction) {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        //@ts-ignore
-        return next(ApiError.BadRequest('Validation error', errors.array()));
+        return next(
+          ApiError.BadRequest('Validation error', errors.array() as any)
+        );
       }
-      const { email, password } = req.body;
-      const userData = await userService.registration(email, password);
+      const {
+        email,
+        password,
+        firstName,
+        lastName,
+        dateOfBirth,
+        height,
+        gender,
+        recaptchaToken,
+      } = req.body;
+
+      if (recaptchaToken) {
+        const isRecaptchaValid = await RecaptchaService.verifyToken(
+          recaptchaToken,
+          'registration'
+        );
+        if (!isRecaptchaValid) {
+          return next(ApiError.BadRequest('reCAPTCHA verification failed'));
+        }
+      } else {
+        return next(ApiError.BadRequest('reCAPTCHA token is required'));
+      }
+
+      const additionalData = {
+        firstName: firstName || '',
+        familyName: lastName || '',
+        dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : null,
+        height: height ? parseFloat(height) : null,
+        gender: gender || null,
+      };
+
+      const userData = await userService.registration(
+        email,
+        password,
+        additionalData
+      );
       res.cookie('refreshToken', userData.refreshToken, {
-        maxAge: 30 * 24 * 60 * 60 * 100,
+        maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
       });
       res.json(userData);
     } catch (error) {
@@ -24,15 +62,33 @@ class UserAuthController {
   }
 
   async login(req: Request, res: Response, next: NextFunction) {
+    console.log(111, 'INSIDE LOGIN', req.body)
     try {
-      const { email, password } = req.body;
+      const { email, password, recaptchaToken } = req.body;
+
+      if (recaptchaToken) {
+        const isRecaptchaValid = await RecaptchaService.verifyToken(
+          recaptchaToken,
+          'login'
+        );
+        if (!isRecaptchaValid) {
+          return next(ApiError.BadRequest('reCAPTCHA verification failed'));
+        }
+      } else {
+        return next(ApiError.BadRequest('reCAPTCHA token is required'));
+      }
+
       const userData = await userService.login(email, password);
+      console.log(3636, userData)
       res.cookie('refreshToken', userData.refreshToken, {
-        maxAge: 30 * 24 * 60 * 60 * 100,
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 дней
         httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
       });
       res.json(userData);
     } catch (error) {
+      console.log(777, error)
       next(error);
     }
   }
@@ -62,8 +118,10 @@ class UserAuthController {
       const { refreshToken } = req.cookies;
       const userData = await userService.refresh(refreshToken);
       res.cookie('refreshToken', userData.refreshToken, {
-        maxAge: 30 * 24 * 60 * 60 * 100,
+        maxAge: 30 * 24 * 60 * 60 * 1000, // Исправлено: было 100, стало 1000
         httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
       });
       res.json(userData);
     } catch (error) {

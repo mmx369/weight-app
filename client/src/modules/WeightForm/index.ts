@@ -1,3 +1,4 @@
-import { WeightForm } from './WeightForm'
+import { observer } from 'mobx-react-lite';
+import { WeightForm } from './WeightForm';
 
-export default WeightForm
+export default observer(WeightForm);
