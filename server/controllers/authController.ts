@@ -62,7 +62,6 @@ class UserAuthController {
   }
 
   async login(req: Request, res: Response, next: NextFunction) {
-    console.log(111, 'INSIDE LOGIN', req.body)
     try {
       const { email, password, recaptchaToken } = req.body;
 
@@ -79,7 +78,7 @@ class UserAuthController {
       }
 
       const userData = await userService.login(email, password);
-      console.log(3636, userData)
+
       res.cookie('refreshToken', userData.refreshToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000, // 30 дней
         httpOnly: true,
@@ -88,7 +87,6 @@ class UserAuthController {
       });
       res.json(userData);
     } catch (error) {
-      console.log(777, error)
       next(error);
     }
   }
