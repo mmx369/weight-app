@@ -28,10 +28,14 @@ class UserProfileController {
         dateOfBirth,
         height,
       };
-      await profileService.editProfileData(
+      const updatedProfile = await profileService.editProfileData(
         currentUser,
         newUserData
       );
+      return res.status(200).json({
+        message: 'Profile updated successfully',
+        user: updatedProfile,
+      });
     } catch (error) {
       next(error);
     }

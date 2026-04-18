@@ -8,6 +8,7 @@ import path from 'node:path';
 import errorMiddleware from './middleware/errorMiddleware';
 import apiRouter from './routers';
 import logger from './utils/logger';
+import { migrateWeightDataStructure } from './utils/weightDataMigration';
 
 dotenv.config();
 
@@ -103,7 +104,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../../client/build')));
 
 app.get('/', (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '../../client/index.html'));
+  res.sendFile(path.join(__dirname, '../../client/build/index.html'));
 });
 
 app.use('/api', apiRouter);
@@ -137,6 +138,8 @@ async function startApp() {
     mongoose.connection.on('disconnected', () => {
       logger.warn('MongoDB disconnected');
     });
+
+    await migrateWeightDataStructure();
 
     // Graceful shutdown
     process.on('SIGINT', async () => {

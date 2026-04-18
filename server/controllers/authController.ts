@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import ApiError from '../exceptions/api-error';
 import userService from '../service/user-service';
-import { RecaptchaService } from '../service/recaptcha-service';
 
 class UserAuthController {
   async registration(req: Request, res: Response, next: NextFunction) {
@@ -21,20 +20,9 @@ class UserAuthController {
         dateOfBirth,
         height,
         gender,
-        recaptchaToken,
       } = req.body;
 
-      if (recaptchaToken) {
-        const isRecaptchaValid = await RecaptchaService.verifyToken(
-          recaptchaToken,
-          'registration'
-        );
-        if (!isRecaptchaValid) {
-          return next(ApiError.BadRequest('reCAPTCHA verification failed'));
-        }
-      } else {
-        return next(ApiError.BadRequest('reCAPTCHA token is required'));
-      }
+      // reCAPTCHA is intentionally disabled for registration flow.
 
       const additionalData = {
         firstName: firstName || '',
@@ -63,19 +51,7 @@ class UserAuthController {
 
   async login(req: Request, res: Response, next: NextFunction) {
     try {
-      const { email, password, recaptchaToken } = req.body;
-
-      if (recaptchaToken) {
-        const isRecaptchaValid = await RecaptchaService.verifyToken(
-          recaptchaToken,
-          'login'
-        );
-        if (!isRecaptchaValid) {
-          return next(ApiError.BadRequest('reCAPTCHA verification failed'));
-        }
-      } else {
-        return next(ApiError.BadRequest('reCAPTCHA token is required'));
-      }
+      const { email, password } = req.body;
 
       const userData = await userService.login(email, password);
 

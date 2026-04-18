@@ -15,7 +15,7 @@ class UserService {
     if (candidate) {
       throw ApiError.BadRequest(`User ${email} already exist`);
     }
-    const hashPassword = await bcrypt.hash(password, 3);
+    const hashPassword = await bcrypt.hash(password, 10);
     const activationLink = uuidv4();
 
     const userData = {

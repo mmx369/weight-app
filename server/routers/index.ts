@@ -50,6 +50,18 @@ router.get(
   weightController.getSimpleMovingAvg as any
 );
 router.get(
+  '/weight/trend',
+  apiLimiter,
+  authMiddleware,
+  weightController.getTrend as any
+);
+router.get(
+  '/weight/metrics',
+  apiLimiter,
+  authMiddleware,
+  weightController.getMetrics as any
+);
+router.get(
   '/weight',
   apiLimiter,
   authMiddleware,
@@ -72,6 +84,12 @@ router.delete(
   weightDeleteLimiter,
   authMiddleware,
   weightController.deleteEntry as any
+);
+router.put(
+  '/weight/:id',
+  weightCreateLimiter,
+  authMiddleware,
+  weightController.updateEntry as any
 );
 
 router.post(
