@@ -9,9 +9,6 @@ import {
 import { useInput } from '../LoginForm/hooks/use-input';
 
 import { useNavigate, Link } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { ReCaptcha } from '../../shared/components';
 import { notify } from '../../shared/helper/notify';
 
 export const RegistrationForm: React.FC = () => {
@@ -20,7 +17,6 @@ export const RegistrationForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
 
   // Email validation
   const {
@@ -117,8 +113,7 @@ export const RegistrationForm: React.FC = () => {
     enteredLastNameIsValid &&
     enteredDateOfBirthIsValid &&
     enteredHeightIsValid &&
-    gender &&
-    recaptchaToken
+    gender
   ) {
     formIsValid = true;
   }
@@ -149,8 +144,7 @@ export const RegistrationForm: React.FC = () => {
       await store.registration(
         email,
         password,
-        registrationData,
-        recaptchaToken || undefined
+        registrationData
       );
 
       // Reset form
@@ -184,15 +178,6 @@ export const RegistrationForm: React.FC = () => {
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const handleRecaptchaVerify = (token: string | null) => {
-    setRecaptchaToken(token);
-  };
-
-  const handleRecaptchaError = () => {
-    setRecaptchaToken(null);
-    notify('reCAPTCHA error. Please try again.', 'error');
   };
 
   const getInputClasses = (hasError: boolean) => {
@@ -440,16 +425,6 @@ export const RegistrationForm: React.FC = () => {
             </div>
           </div>
 
-          <ReCaptcha
-            siteKey={
-              process.env.REACT_APP_RECAPTCHA_SITE_KEY ||
-              '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
-            }
-            action='registration'
-            onVerify={handleRecaptchaVerify}
-            onError={handleRecaptchaError}
-          />
-
           <div className={classes.form_actions}>
             <button
               className={classes.button}
@@ -473,7 +448,6 @@ export const RegistrationForm: React.FC = () => {
           </Link>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };

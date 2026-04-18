@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap');
+
 * {
   box-sizing: border-box;
 }
@@ -11,29 +13,46 @@ html {
 body {
   margin: 0;
   height: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 400;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background:
+    radial-gradient(circle at 10% 15%, rgba(96, 165, 250, 0.18), transparent 35%),
+    radial-gradient(circle at 90% 85%, rgba(167, 139, 250, 0.16), transparent 32%),
+    linear-gradient(145deg, #111827 0%, #1e1b4b 45%, #312e81 100%);
   background-attachment: fixed;
-  color: #2d3748;
+  color: #e2e8f0;
   line-height: 1.6;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.035) 0.7px,
+    transparent 0.7px
+  );
+  background-size: 3px 3px;
+  opacity: 0.3;
 }
 
 /* Современные CSS переменные для цветовой схемы */
 :root {
-  --primary-color: #667eea;
-  --primary-dark: #5a67d8;
-  --secondary-color: #764ba2;
-  --accent-color: #f093fb;
-  --text-primary: #2d3748;
-  --text-secondary: #4a5568;
-  --text-muted: #718096;
+  --primary-color: #6366f1;
+  --primary-dark: #4f46e5;
+  --secondary-color: #7c3aed;
+  --accent-color: #22d3ee;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
   --background-white: #ffffff;
-  --background-light: #f7fafc;
+  --background-light: #f1f5f9;
   --background-card: #ffffff;
   --border-color: #e2e8f0;
   --border-light: #f1f5f9;
@@ -48,4 +67,46 @@ body {
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
+}
+
+/* Toastify custom theme */
+.Toastify__toast-container--top-center {
+  top: 1rem;
+}
+
+.app-toast {
+  border-radius: 14px;
+  min-height: 56px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(6px);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.app-toast__body {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  padding: 0.15rem 0;
+}
+
+.app-toast__progress {
+  height: 3px;
+  opacity: 0.9;
+}
+
+.app-toast--success {
+  background: linear-gradient(135deg, #2f855a 0%, #38a169 100%);
+}
+
+.app-toast--error {
+  background: linear-gradient(135deg, #c53030 0%, #e53e3e 100%);
+}
+
+.app-toast--warn {
+  background: linear-gradient(135deg, #b7791f 0%, #d69e2e 100%);
+}
+
+.app-toast--info {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
 }

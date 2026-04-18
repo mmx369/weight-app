@@ -5,9 +5,13 @@ import classes from './ProfileDropdown.module.css';
 
 interface ProfileDropdownProps {
   isAuth: boolean;
+  onLogout: () => void;
 }
 
-export const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ isAuth }) => {
+export const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
+  isAuth,
+  onLogout,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -123,6 +127,31 @@ export const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ isAuth }) => {
               <circle cx='12' cy='7' r='4'></circle>
             </svg>
             Profile
+          </button>
+
+          <button
+            className={`${classes.menuItem} ${classes.logoutItem}`}
+            onClick={() => {
+              setIsOpen(false);
+              onLogout();
+            }}
+          >
+            <svg
+              width='16'
+              height='16'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              strokeWidth='2'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              className={classes.menuIcon}
+            >
+              <path d='M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4' />
+              <polyline points='16 17 21 12 16 7' />
+              <line x1='21' y1='12' x2='9' y2='12' />
+            </svg>
+            Log out
           </button>
         </div>
       )}

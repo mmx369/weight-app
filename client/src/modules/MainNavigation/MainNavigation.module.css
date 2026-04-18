@@ -1,9 +1,9 @@
 .header {
-  position: static;
+  position: sticky;
   top: 0;
-  left: 0;
+  z-index: 150;
   width: 100%;
-  height: 4rem;
+  min-height: 4.25rem;
   background: linear-gradient(
     135deg,
     var(--primary-color) 0%,
@@ -13,74 +13,157 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2rem;
+  padding: 0.5rem 1.25rem;
   box-shadow: var(--shadow-lg);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
 }
 
-.header_title {
-  margin-left: 1rem;
-  font-size: 1.2rem;
-  font-weight: 500;
-  letter-spacing: -0.025em;
-  opacity: 0.9;
-}
-
-.header_logo {
-  margin: 0 1rem;
-  display: flex;
+.brandLink {
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-}
-
-.active {
-  visibility: hidden;
-}
-
-.navlink {
+  gap: 0.65rem;
   color: white;
   text-decoration: none;
-  padding: 0.5rem 1rem;
   border-radius: var(--radius-md);
-  transition: all 0.3s ease;
-  font-weight: 500;
-  position: relative;
+  padding: 0.35rem 0.45rem;
+  transition: all 0.25s ease;
 }
 
-.navlink:hover {
+.brandLink:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.logoBadge {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #f8fafc;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+
+.brandMain {
+  font-size: 1.28rem;
+  letter-spacing: 0.01em;
+  font-weight: 800;
+}
+
+.brandSub {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  opacity: 0.78;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.dashboardLink {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 0.42rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
   background: rgba(255, 255, 255, 0.1);
+  transition: all 0.22s ease;
+}
+
+.dashboardLink:hover {
+  background: rgba(255, 255, 255, 0.2);
   transform: translateY(-1px);
 }
 
-.navlink::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 50%;
-  width: 0;
-  height: 2px;
-  background: var(--accent-color);
-  transition: all 0.3s ease;
-  transform: translateX(-50%);
+.welcomeText {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+  white-space: nowrap;
 }
 
-.navlink:hover::after {
-  width: 80%;
+.welcomeText span {
+  font-weight: 700;
+}
+
+.motivationBar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.45rem 1rem;
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #eef2ff;
+  background: linear-gradient(
+    90deg,
+    rgba(79, 70, 229, 0.85),
+    rgba(124, 58, 237, 0.85)
+  );
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  letter-spacing: 0.01em;
+}
+
+.motivationIcon {
+  font-size: 0.95rem;
+  opacity: 0.95;
+}
+
+.motivationText {
+  text-align: center;
 }
 
 @media (max-width: 600px) {
   .header {
     padding: 0 1rem;
-    height: 3.5rem;
+    min-height: 3.6rem;
   }
 
-  .header_title {
+  .brandSub {
     display: none;
   }
 
-  .navlink {
-    padding: 0.375rem 0.75rem;
-    font-size: 0.875rem;
+  .brandMain {
+    font-size: 1.05rem;
+  }
+
+  .logoBadge {
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+  }
+
+  .welcomeText {
+    display: none;
+  }
+
+  .dashboardLink {
+    font-size: 0.78rem;
+    padding: 0.34rem 0.58rem;
+  }
+
+  .motivationBar {
+    font-size: 0.75rem;
+    padding: 0.42rem 0.6rem;
   }
 }

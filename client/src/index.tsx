@@ -14,6 +14,7 @@ import { Dashboard } from './pages/Dashboard';
 import { Profile } from './pages/Profile';
 import { ROUTES } from './routes';
 import { ErrorBoundary } from './shared/components';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface State {
   store: Store;

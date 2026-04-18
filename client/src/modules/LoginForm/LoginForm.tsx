@@ -6,16 +6,12 @@ import { emailValidation, passwordValidation } from './helper/validate';
 import { useInput } from './hooks/use-input';
 
 import { useNavigate, Link } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { notify } from '../../shared/helper/notify';
-import { ReCaptcha } from '../../shared/components';
 
 export const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
 
   const {
     value: email,
@@ -39,20 +35,20 @@ export const LoginForm: React.FC = () => {
 
   let formIsValid = false;
 
-  if (enteredEmailIsValid && enteredPasswordIsValid && recaptchaToken) {
+  if (enteredEmailIsValid && enteredPasswordIsValid) {
     formIsValid = true;
   }
 
   const formSubmissionHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!enteredEmailIsValid || !enteredPasswordIsValid || !recaptchaToken) {
+    if (!enteredEmailIsValid || !enteredPasswordIsValid) {
       return;
     }
 
     setIsLoading(true);
 
     try {
-      await store.login(email, password, recaptchaToken || undefined);
+      await store.login(email, password);
       resetEmailInput();
       resetPasswordInput();
       navigate('/');
@@ -63,15 +59,6 @@ export const LoginForm: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleRecaptchaVerify = (token: string | null) => {
-    setRecaptchaToken(token);
-  };
-
-  const handleRecaptchaError = () => {
-    setRecaptchaToken(null);
-    notify('reCAPTCHA error. Please try again.', 'error');
   };
 
   const emailInputClasses = emailHasError
@@ -157,25 +144,11 @@ export const LoginForm: React.FC = () => {
               )}
             </div>
 
-            <ReCaptcha
-              siteKey={(() => {
-                const key =
-                  process.env.REACT_APP_RECAPTCHA_SITE_KEY || '';
-                return key;
-              })()}
-              action='login'
-              onVerify={handleRecaptchaVerify}
-              onError={handleRecaptchaError}
-            />
-
             <div className={classes.form_actions}>
               <button
                 className={classes.button}
                 type='submit'
                 disabled={isLoading || !formIsValid}
-                onClick={() =>
-                  console.log('Button clicked, isLoading:', isLoading)
-                }
               >
                 {isLoading ? 'Signing In...' : 'Sign In'}
               </button>
@@ -190,7 +163,6 @@ export const LoginForm: React.FC = () => {
           </Link>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };

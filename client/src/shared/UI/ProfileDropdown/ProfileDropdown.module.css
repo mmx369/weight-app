@@ -5,20 +5,21 @@
 }
 
 .profileButton {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.14);
   border: none;
   cursor: pointer;
   padding: 8px;
-  border-radius: 50%;
+  border-radius: 10px;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .profileButton:hover {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.24);
   transform: scale(1.05);
 }
 
@@ -74,36 +75,37 @@
   position: absolute;
   top: 100%;
   right: 0;
-  background: white;
-  border: 1px solid #dee2e6;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  min-width: 160px;
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.2);
+  min-width: 180px;
   z-index: 1000;
   overflow: hidden;
-  margin-top: 4px;
+  margin-top: 8px;
+  backdrop-filter: blur(10px);
 }
 
 .menuItem {
   width: 100%;
   background: none;
   border: none;
-  padding: 12px 16px;
+  padding: 11px 14px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 12px;
   font-size: 14px;
-  color: #333;
+  color: #334155;
   transition: background-color 0.2s ease;
   text-align: left;
 }
 
 .menuItem:hover {
-  background: #f8f9fa;
+  background: #f8fafc;
 }
 
-.menuItem:first-child {
+.menuItem:not(:last-child) {
   border-bottom: 1px solid #dee2e6;
 }
 
@@ -113,7 +115,19 @@
 }
 
 .menuItem:hover .menuIcon {
-  color: #007bff;
+  color: #4f46e5;
+}
+
+.logoutItem {
+  color: #b91c1c;
+}
+
+.logoutItem .menuIcon {
+  color: #dc2626;
+}
+
+.logoutItem:hover {
+  background: #fef2f2;
 }
 
 /* Анимация появления */

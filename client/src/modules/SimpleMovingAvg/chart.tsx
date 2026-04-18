@@ -1,6 +1,5 @@
 import {
   CartesianGrid,
-  Label,
   Line,
   LineChart,
   ResponsiveContainer,
@@ -8,63 +7,83 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import { IWeightTrendPoint } from '../../shared/interfaces/IWeightData';
 
 type TProps = {
-  data: number[];
+  data: IWeightTrendPoint[];
+  showWeight: boolean;
+  showSma: boolean;
 };
 
-export const RenderLineChart = ({ data }: TProps) => {
-  const chartData =
-    data &&
-    data.map((el: number, i: number) => {
-      return { name: i, kg: el };
-    });
+const formatDateLabel = (value: string) =>
+  new Date(value).toLocaleDateString(undefined, {
+    day: '2-digit',
+    month: 'short',
+  });
+
+export const RenderLineChart = ({ data, showWeight, showSma }: TProps) => {
+  const chartData = data.map((point) => ({
+    ...point,
+    dateLabel: formatDateLabel(point.date),
+  }));
 
   return (
-    <>
-      {chartData && (
-        <ResponsiveContainer width={'100%'} height={300}>
-          <LineChart
-            width={600}
-            height={300}
-            data={chartData}
-            margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
-          >
-            <Line
-              type='monotone'
-              dataKey='kg'
-              stroke='#4f46e5'
-              strokeWidth={3}
-            />
-            <CartesianGrid stroke='#e2e8f0' strokeDasharray='3 3' />
-            <XAxis
-              dataKey='name'
-              stroke='#64748b'
-              tick={{ fill: '#374151', fontSize: 12, fontWeight: 'bold' }}
-            >
-              <Label
-                value='Weeks'
-                position='insideBottomRight'
-                offset={40}
-                style={{ fontWeight: 'bold', fill: '#374151' }}
-              />
-            </XAxis>
-            <YAxis
-              domain={['dataMin - 1', 'dataMax + 1']}
-              stroke='#64748b'
-              tick={{ fill: '#374151', fontSize: 12, fontWeight: 'bold' }}
-            >
-              <Label
-                value='Kg.'
-                position='insideTopLeft'
-                offset={70}
-                style={{ fontWeight: 'bold', fill: '#374151' }}
-              />
-            </YAxis>
-            <Tooltip />
-          </LineChart>
-        </ResponsiveContainer>
-      )}
-    </>
+    <ResponsiveContainer width={'100%'} height={340}>
+      <LineChart
+        width={600}
+        height={340}
+        data={chartData}
+        margin={{ top: 8, right: 18, bottom: 8, left: 4 }}
+      >
+        <CartesianGrid stroke='#e2e8f0' strokeDasharray='3 3' />
+        <XAxis
+          dataKey='dateLabel'
+          stroke='#64748b'
+          tick={{ fill: '#334155', fontSize: 12, fontWeight: 600 }}
+          minTickGap={24}
+        />
+        <YAxis
+          stroke='#64748b'
+          tick={{ fill: '#334155', fontSize: 12, fontWeight: 600 }}
+          domain={['dataMin - 1', 'dataMax + 1']}
+          tickFormatter={(value) => `${value}kg`}
+        />
+        <Tooltip
+          formatter={(value: number, name: string) => [
+            `${Number(value).toFixed(2)} kg`,
+            name === 'weight' ? 'Weight' : 'SMA (7d)',
+          ]}
+          labelFormatter={(_, payload) => {
+            const point = payload?.[0]?.payload as { date?: string } | undefined;
+            return point?.date
+              ? new Date(point.date).toLocaleDateString()
+              : '';
+          }}
+        />
+        {showWeight && (
+          <Line
+            type='monotone'
+            dataKey='weight'
+            stroke='#4f46e5'
+            strokeWidth={3}
+            dot={{ r: 3 }}
+            activeDot={{ r: 5 }}
+            name='weight'
+          />
+        )}
+        {showSma && (
+          <Line
+            type='monotone'
+            dataKey='sma7'
+            stroke='#0ea5e9'
+            strokeWidth={3}
+            strokeDasharray='5 5'
+            dot={false}
+            activeDot={{ r: 5 }}
+            name='sma7'
+          />
+        )}
+      </LineChart>
+    </ResponsiveContainer>
   );
 };

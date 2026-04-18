@@ -1,5 +1,10 @@
 import { json } from 'react-router-dom';
 import $api from '../http';
+import {
+  IWeightMetrics,
+  IWeightTrendResponse,
+  TTrendPeriod,
+} from '../shared/interfaces/IWeightData';
 
 type TCreateChallenge = {
   weight: string;
@@ -29,6 +34,18 @@ export default class WeightService {
     return response.data;
   }
 
+  static async getMetrics(): Promise<IWeightMetrics> {
+    const response = await $api.get<IWeightMetrics>(`${baseUrl}/metrics`);
+    return response.data;
+  }
+
+  static async getTrend(period: TTrendPeriod): Promise<IWeightTrendResponse> {
+    const response = await $api.get<IWeightTrendResponse>(
+      `${baseUrl}/trend?period=${period}`
+    );
+    return response.data;
+  }
+
   static async createNewEntry(newObject: TCreateChallenge) {
     const response = await $api.post(baseUrl, newObject);
     return response;
@@ -36,7 +53,7 @@ export default class WeightService {
 
   static async modifyProfileData(data: any) {
     const response = await $api.post('/edit-profile', data);
-    console.log(response);
+    return response.data;
   }
 
   static async removeLastEntry() {
@@ -47,5 +64,10 @@ export default class WeightService {
   static async deleteEntry(entryId: string) {
     const response = await $api.delete(`${baseUrl}/${entryId}`);
     return response;
+  }
+
+  static async updateEntry(entryId: string, weight: string) {
+    const response = await $api.put(`${baseUrl}/${entryId}`, { weight });
+    return response.data;
   }
 }
